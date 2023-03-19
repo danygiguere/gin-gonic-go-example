@@ -5,25 +5,19 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
+	"os"
+	"strconv"
 )
-
-const (
-	host     = "localhost"
-	port     = 3306
-	user     = "root"
-	password = "root"
-	dbName   = "docker_db"
-)
-
-//var user = os.Getenv("DB_USER")
-//var password = os.Getenv("DB_PASS")
-//var host = os.Getenv("DB_HOST")
-//var port = os.Getenv("DB_PORT")
-//var dbName = os.Getenv("DB_NAME")
 
 var DB *gorm.DB
 
 func ConnectToDB() {
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASS")
+	host := os.Getenv("DB_HOST")
+	port, _ := strconv.Atoi(os.Getenv("DB_PORT"))
+	dbName := os.Getenv("DB_NAME")
+
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, password, host, port, dbName)
 
 	var err error
